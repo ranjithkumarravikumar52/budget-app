@@ -5,13 +5,20 @@ var budgetController = (function () {
 
 //UI CONTROLLER
 var UIController = (function(){
+    //externalize all the dom strings here
+    var DOMStrings = {
+        inputType : ".add__type",
+        inputDescription : ".add__description",
+        inputValue : ".add__value"
+    };
+
     //write a public method that reads different types of html input
     return {
         getInput : function(){
             return {
-                type : document.querySelector(".add__type").value, //this will be either inc or exp
-                description : document.querySelector(".add__description").value,
-                value : document.querySelector(".add__value").value
+                type : document.querySelector(DOMStrings.inputType).value, //this will be either inc or exp
+                description : document.querySelector(DOMStrings.inputDescription).value,
+                value : document.querySelector(DOMStrings.inputValue).value
             }
         }
     };
