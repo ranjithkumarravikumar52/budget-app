@@ -154,7 +154,14 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         });
     };
 
+    //methods for updating and deletion of the budget
+    var updateBudget = function () {
+        //1. Calculate the budget
 
+        //2. Returns the budget
+
+        //3. Display the budget on UI
+    };
 
     //custom function for event listeners
     var ctrlAddItem = function(){
@@ -174,8 +181,8 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         //4. Clear the fields
         UICtrl.clearFields();
 
-        //5. Calculate the budget
-        //6. Display the budget on UI
+        //5. Calculate and updateBudget
+        updateBudget();
     };
 
     //exposing our methods
