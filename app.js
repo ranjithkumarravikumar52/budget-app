@@ -14,11 +14,16 @@ var budgetController = (function () {
         this.value = value;
     };
 
-    //better, but still can be worked up on
+    //best?
     var data = {
-        allExpenses : [],
-        allIncomes : [],
-        totalExpenses : 0
+        allItems : {
+            allExpenses : [],
+            allIncomes : [],
+        },
+        totals : {
+            expenses : 0,
+            incomes : 0
+        }
     }
 
 
