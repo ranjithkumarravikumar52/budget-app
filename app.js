@@ -1,5 +1,31 @@
 //IIFE + closures to create budget module
 var budgetController = (function () {
+    //function constructor, notice the UpperCase E
+    var Expense = function (id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    //function constructor, notice the UpperCase I
+    var Income = function (id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    //best?
+    var data = {
+        allItems : {
+            allExpenses : [],
+            allIncomes : [],
+        },
+        totals : {
+            expenses : 0,
+            incomes : 0
+        }
+    }
+
 
 })();
 
