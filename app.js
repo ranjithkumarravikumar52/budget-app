@@ -171,18 +171,21 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         var input = UICtrl.getInput();
         console.log("input", input);
 
-        //2. Add the item to the budgetController
-        var addItem = budgetCtrl.addItem(input.type, input.description, input.value);
-        budgetCtrl.testing();
+        //description can't be empty, value is greater than 0
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0){
+            //2. Add the item to the budgetController
+            var addItem = budgetCtrl.addItem(input.type, input.description, input.value);
+            budgetCtrl.testing();
 
-        //3. Add the item to the UI
-        UICtrl.addListItem(addItem, input.type);
+            //3. Add the item to the UI
+            UICtrl.addListItem(addItem, input.type);
 
-        //4. Clear the fields
-        UICtrl.clearFields();
+            //4. Clear the fields
+            UICtrl.clearFields();
 
-        //5. Calculate and updateBudget
-        updateBudget();
+            //5. Calculate and updateBudget
+            updateBudget();
+        }
     };
 
     //exposing our methods
