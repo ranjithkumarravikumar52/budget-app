@@ -105,7 +105,11 @@ var UIController = (function(){
         inputValue : ".add__value",
         inputButton : ".add__btn",
         incomeContainer : ".income__list",
-        expenseContainer : ".expenses__list"
+        expenseContainer : ".expenses__list",
+        budgetLabel : ".budget__value",
+        incomesLabel : ".budget__income--value",
+        expensesLabel : ".budget__expenses--value",
+        percentageLabel : ".budget__expenses--percentage"
     };
 
     //write a public method that reads different types of html input
@@ -167,6 +171,13 @@ var UIController = (function(){
 
             //to place the focus back to description
             fieldsArray[0].focus();
+        },
+        displayBudget : function(obj){
+            //obj contains 4 pieces of data
+            document.querySelector(DOMStrings.budgetLabel).textContent = obj.budget;
+            document.querySelector(DOMStrings.incomesLabel).textContent = obj.totalInc;
+            document.querySelector(DOMStrings.expensesLabel).textContent = obj.totalExp;
+            document.querySelector(DOMStrings.percentageLabel).textContent = obj.percentage;
         }
     };
 })();
@@ -199,7 +210,7 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         var budget = budgetCtrl.getBudget();
 
         //3. Display the budget on UI
-        console.log("budget", budget);
+        UICtrl.displayBudget(budget);
     };
 
     //custom function for event listeners
