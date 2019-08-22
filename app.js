@@ -10,14 +10,20 @@ var UIController = (function(){
 
 //The main controller that connects all the other controllers
 var appController = (function(budgetCtrl, UICtrl){ //params are named differently to avoid name-space collision and confusion with global variables
-    //when user clicks on the button
-    document.querySelector(".add__btn").addEventListener('click', function(){
-        console.log("Button was clicked"); //debug
+
+    //custom function for event listeners
+    var ctrlAddItem = function(){
         //1. Get the field input data
         //2. Add the item to the budgetController
         //3. Add the item to the UI
         //4. Calculate the budget
         //5. Display the budget on UI
+    };
+
+    //when user clicks on the button
+    document.querySelector(".add__btn").addEventListener('click', function(){
+        console.log("Button was clicked"); //debug
+        ctrlAddItem();
     });
 
     //when user clicks on "enter" key
@@ -25,11 +31,7 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         // console.log("event", event); //debug
         if(event.keyCode === 13 || event.which === 13){
             console.log("ENTER was pressed");
-            //1. Get the field input data
-            //2. Add the item to the budgetController
-            //3. Add the item to the UI
-            //4. Calculate the budget
-            //5. Display the budget on UI
+            ctrlAddItem();
         }
     });
 k
