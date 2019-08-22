@@ -24,7 +24,7 @@ var budgetController = (function () {
             expenses : 0,
             incomes : 0
         }
-    }
+    };
 
     //public method exposing our functionality
     return {
@@ -78,7 +78,7 @@ var UIController = (function(){
             return {
                 type : document.querySelector(DOMStrings.inputType).value, //this will be either inc or exp
                 description : document.querySelector(DOMStrings.inputDescription).value,
-                value : document.querySelector(DOMStrings.inputValue).value
+                value : parseFloat(document.querySelector(DOMStrings.inputValue).value) //converts string to float
             }
         },
         //to pass our DOM string to main controller
