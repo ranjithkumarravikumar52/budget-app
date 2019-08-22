@@ -5,7 +5,14 @@ var budgetController = (function () {
 
 //UI CONTROLLER
 var UIController = (function(){
-    //some code
+    //write a public method that reads different types of html input
+    return {
+        getInput : function(){
+            var type = document.querySelector(".add__type").value; //this will be either inc or exp
+            var description = document.querySelector(".add__description").value;
+            var value = document.querySelector(".add__value").value;
+        }
+    };
 })();
 
 //The main controller that connects all the other controllers
