@@ -1,40 +1,36 @@
 //IIFE + closures to create budget module
 var budgetController = (function () {
 
-    //private variable
-    var x = 10; //test in console budgetController.x
-
-    //private function
-    var addFunction = function (a) { //test in console budgetController.addFunction(10)
-        return x + a;
-    };
-
-    //return an object that we want it to be public
-    return {
-        publicTest : function(b){
-            return addFunction(b);
-        }
-    }
 })();
 
+//UI CONTROLLER
 var UIController = (function(){
     //some code
 })();
 
-//the main controller that connects all the other controllers
+//The main controller that connects all the other controllers
 var appController = (function(budgetCtrl, UICtrl){ //params are named differently to avoid name-space collision and confusion with global variables
+    //when user clicks on the button
+    document.querySelector(".add__btn").addEventListener('click', function(){
+        console.log("Button was clicked"); //debug
+        //1. Get the field input data
+        //2. Add the item to the budgetController
+        //3. Add the item to the UI
+        //4. Calculate the budget
+        //5. Display the budget on UI
+    });
 
-    //we want to access any function from the param but not from global
-    // budgetController.publicTest(10); //bad practice
-
-    //sample test of budgetController
-    var z = budgetCtrl.publicTest(10);
-
-    //return in an object
-    return {
-        anotherPublicTest : function(){
-            console.log("z", z);
+    //when user clicks on "enter" key
+    document.addEventListener('keypress', function(event){ //event here gets automatically passed down by our browser
+        // console.log("event", event); //debug
+        if(event.keyCode === 13 || event.which === 13){
+            console.log("ENTER was pressed");
+            //1. Get the field input data
+            //2. Add the item to the budgetController
+            //3. Add the item to the UI
+            //4. Calculate the budget
+            //5. Display the budget on UI
         }
-    }
-
+    });
+k
 })(budgetController, UIController);
