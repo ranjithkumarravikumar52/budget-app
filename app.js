@@ -116,6 +116,21 @@ var UIController = (function(){
              */
             document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
 
+        },
+        clearFields : function(){
+            var fields, fieldsArray;
+            fields = document.querySelectorAll(DOMStrings.inputDescription +", " + DOMStrings.inputValue);
+
+            //the above fields object is a list, not an array, we needed an array
+            fieldsArray = Array.prototype.slice.call(fields);
+
+            //iterate the fieldsArray and clear each object in it. We do this using for-each
+            fieldsArray.forEach(function(currentElement, index, array){
+                currentElement.value = "";
+            });
+
+            //to place the focus back to description
+            fieldsArray[0].focus();
         }
     };
 })();
@@ -156,9 +171,11 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         //3. Add the item to the UI
         UICtrl.addListItem(addItem, input.type);
 
+        //4. Clear the fields
+        UICtrl.clearFields();
 
-        //4. Calculate the budget
-        //5. Display the budget on UI
+        //5. Calculate the budget
+        //6. Display the budget on UI
     };
 
     //exposing our methods
