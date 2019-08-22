@@ -13,6 +13,7 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
     //custom function for event listeners
     var ctrlAddItem = function(){
+        console.log("It works");
         //1. Get the field input data
         //2. Add the item to the budgetController
         //3. Add the item to the UI
@@ -21,18 +22,14 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
     };
 
     //when user clicks on the button
-    document.querySelector(".add__btn").addEventListener('click', function(){
-        console.log("Button was clicked"); //debug
-        ctrlAddItem();
-    });
+    document.querySelector(".add__btn").addEventListener('click', ctrlAddItem);
 
     //when user clicks on "enter" key
     document.addEventListener('keypress', function(event){ //event here gets automatically passed down by our browser
         // console.log("event", event); //debug
         if(event.keyCode === 13 || event.which === 13){
-            console.log("ENTER was pressed");
+            // console.log("ENTER was pressed"); //debug
             ctrlAddItem();
         }
     });
-k
 })(budgetController, UIController);
