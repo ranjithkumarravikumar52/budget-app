@@ -8,9 +8,11 @@ var UIController = (function(){
     //write a public method that reads different types of html input
     return {
         getInput : function(){
-            var type = document.querySelector(".add__type").value; //this will be either inc or exp
-            var description = document.querySelector(".add__description").value;
-            var value = document.querySelector(".add__value").value;
+            return {
+                type : document.querySelector(".add__type").value, //this will be either inc or exp
+                description : document.querySelector(".add__description").value,
+                value : document.querySelector(".add__value").value
+            }
         }
     };
 })();
@@ -20,8 +22,12 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
     //custom function for event listeners
     var ctrlAddItem = function(){
-        console.log("It works");
+        // console.log("It works"); //debug
+
         //1. Get the field input data
+        var input = UICtrl.getInput();
+        console.log("input", input);
+
         //2. Add the item to the budgetController
         //3. Add the item to the UI
         //4. Calculate the budget
