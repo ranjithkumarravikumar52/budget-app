@@ -14,12 +14,12 @@ var budgetController = (function () {
         this.value = value;
     };
 
-    //how do we store an array of incomes and expenses? Naive approach
-    //to get our data we need to work with 3 different var's below
-    //instead the optimized one would be to have one unified object containing all this information
-    var allExpenses = [];
-    var allIncomes = [];
-    var totalIncomes = 0;
+    //better, but still can be worked up on
+    var data = {
+        allExpenses : [],
+        allIncomes : [],
+        totalExpenses : 0
+    }
 
 
 })();
