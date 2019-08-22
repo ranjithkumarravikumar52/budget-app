@@ -33,7 +33,12 @@ var budgetController = (function () {
 
             //ID = last id + 1;
             //Create a new ID
-            ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            if(data.allItems[type].length > 0){
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            }else{
+                ID = 0;
+            }
+
 
             //Create a new item based on exp/inc type
             if(type === 'exp'){
@@ -46,6 +51,9 @@ var budgetController = (function () {
             data.allItems[type].push(newItem);
 
             return newItem;
+        },
+        testing : function(){
+            console.log(data);
         }
     }
 
@@ -108,6 +116,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         console.log("input", input);
 
         //2. Add the item to the budgetController
+        var addItem = budgetCtrl.addItem(input.type, input.description, input.value);
+        budgetCtrl.testing();
+
         //3. Add the item to the UI
         //4. Calculate the budget
         //5. Display the budget on UI
