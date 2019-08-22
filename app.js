@@ -9,7 +9,8 @@ var UIController = (function(){
     var DOMStrings = {
         inputType : ".add__type",
         inputDescription : ".add__description",
-        inputValue : ".add__value"
+        inputValue : ".add__value",
+        inputButton : ".add__btn"
     };
 
     //write a public method that reads different types of html input
@@ -20,12 +21,18 @@ var UIController = (function(){
                 description : document.querySelector(DOMStrings.inputDescription).value,
                 value : document.querySelector(DOMStrings.inputValue).value
             }
+        },
+        //to pass our DOM string to main controller
+        getDOMString : function(){
+            return DOMStrings;
         }
     };
 })();
 
 //The main controller that connects all the other controllers
 var appController = (function(budgetCtrl, UICtrl){ //params are named differently to avoid name-space collision and confusion with global variables
+
+    var DOM = UICtrl.getDOMString();
 
     //custom function for event listeners
     var ctrlAddItem = function(){
@@ -42,7 +49,7 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
     };
 
     //when user clicks on the button
-    document.querySelector(".add__btn").addEventListener('click', ctrlAddItem);
+    document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
 
     //when user clicks on "enter" key
     document.addEventListener('keypress', function(event){ //event here gets automatically passed down by our browser
