@@ -32,7 +32,23 @@ var UIController = (function(){
 //The main controller that connects all the other controllers
 var appController = (function(budgetCtrl, UICtrl){ //params are named differently to avoid name-space collision and confusion with global variables
 
-    var DOM = UICtrl.getDOMString();
+    var setUpEventListeners = function(){
+        var DOM = UICtrl.getDOMString();
+
+        //when user clicks on the button
+        document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+
+        //when user clicks on "enter" key
+        document.addEventListener('keypress', function(event){ //event here gets automatically passed down by our browser
+            // console.log("event", event); //debug
+            if(event.keyCode === 13 || event.which === 13){
+                // console.log("ENTER was pressed"); //debug
+                ctrlAddItem();
+            }
+        });
+    };
+
+
 
     //custom function for event listeners
     var ctrlAddItem = function(){
@@ -48,15 +64,13 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         //5. Display the budget on UI
     };
 
-    //when user clicks on the button
-    document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
-
-    //when user clicks on "enter" key
-    document.addEventListener('keypress', function(event){ //event here gets automatically passed down by our browser
-        // console.log("event", event); //debug
-        if(event.keyCode === 13 || event.which === 13){
-            // console.log("ENTER was pressed"); //debug
-            ctrlAddItem();
+    //exposing our methods
+    return {
+        init : function(){
+            console.log("Application has started");
+            setUpEventListeners();
         }
-    });
+    };
 })(budgetController, UIController);
+
+appController.init();
