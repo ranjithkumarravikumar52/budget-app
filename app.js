@@ -211,6 +211,13 @@ var UIController = (function(){
         return int;
     };
 
+    //helper function to iterate node list
+    var nodeListForEach = function(list, callback){
+        for (var i = 0; i < list.length ; i++){
+            callback(list[i], i);
+        }
+    };
+
     //write a public method that reads different types of html input
     return {
         getInput : function(){
@@ -297,11 +304,6 @@ var UIController = (function(){
             //we need to get all the item__percentage elements from the html
             var fields = document.querySelectorAll(DOMStrings.expensesPercentageLabel);
 
-            var nodeListForEach = function(list, callback){
-                for (var i = 0; i < list.length ; i++){
-                    callback(list[i], i);
-                }
-            };
 
             //apparently we don't have for each on nodeList
             nodeListForEach(fields, function(current, index){
@@ -323,6 +325,18 @@ var UIController = (function(){
             months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             document.querySelector(DOMStrings.dateLabel).textContent = months[month] + ', '+ year;
+
+        },
+        changedType : function(){
+            // inputType : ".add__type", (red-focus)
+            // inputDescription : ".add__description", (red-focus)
+            // inputValue : ".add__value", (red-focus)
+            // inputButton : ".add__btn", (red)
+            var nodeListRedFocus = document.querySelectorAll(DOMStrings.inputType+","+DOMStrings.inputDescription+","+DOMStrings.inputValue);
+            nodeListForEach(nodeListRedFocus, function(currentElement){
+                currentElement.classList.toggle("red-focus");
+            });
+            document.querySelector(DOMStrings.inputButton).classList.toggle("red");
 
         }
     };
@@ -348,6 +362,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
         //here we choose container because it's the parent of both income and expenses list
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+        //change event
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
     };
 
     // when will our income-percentages be actually updated?
