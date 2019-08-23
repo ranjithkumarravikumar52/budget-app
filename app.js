@@ -108,7 +108,12 @@ var budgetController = (function () {
             });
 
             //get the index of our target ID
-            index = ids.indexOf(ID);
+            index = ids.indexOf(ID); //-1 if item id not found
+
+            if(index !== -1){
+                //splice is used to delete element(s) in an array
+                data.allItems[type].splice(index, 1);
+            }
         }
     }
 
