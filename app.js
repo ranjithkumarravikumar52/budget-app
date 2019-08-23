@@ -280,8 +280,10 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         if(itemID){
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
             // 1. Delete the item from our DS
+            budgetCtrl.deleteItem(type, ID);
+
             // 2. Delete the item from our UI
             // 3. Update and show the new budget
         }
