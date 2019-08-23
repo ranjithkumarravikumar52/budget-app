@@ -90,6 +90,30 @@ var budgetController = (function () {
                 totalExp : data.totals.exp,
                 percentage : data.percentage
             }
+        },
+
+        //to delete an item from our DS
+        deleteItem : function(type, ID){
+            var ids, index;
+            //let's say ID is 6
+            //data.allItems[type][id] //will only work when ids are ordered,
+            // in other words, elements are arranged based on 0-based
+            // and we are trying to access based on the array form
+            //IDS array = [1 2 3 4 6], find the index where our ID is present
+
+
+            //the difference between map and forEach is that map returns a new array
+            ids = data.allItems[type].map(function(currentElement){
+                return currentElement.id;
+            });
+
+            //get the index of our target ID
+            index = ids.indexOf(ID); //-1 if item id not found
+
+            if(index !== -1){
+                //splice is used to delete element(s) in an array
+                data.allItems[type].splice(index, 1);
+            }
         }
     }
 
@@ -256,8 +280,10 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         if(itemID){
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
             // 1. Delete the item from our DS
+            budgetCtrl.deleteItem(type, ID);
+
             // 2. Delete the item from our UI
             // 3. Update and show the new budget
         }
