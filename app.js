@@ -167,7 +167,8 @@ var UIController = (function(){
         incomesLabel : ".budget__income--value",
         expensesLabel : ".budget__expenses--value",
         percentageLabel : ".budget__expenses--percentage",
-        container : ".container"
+        container : ".container",
+        expensesPercentageLabel : ".item__percentage"
     };
 
     //write a public method that reads different types of html input
@@ -247,6 +248,27 @@ var UIController = (function(){
             //apparently we can't delete an element directly in DOM, we can only delete the child element
             var elementById = document.getElementById(selectorID);
             elementById.parentNode.removeChild(elementById);
+        },
+
+        //display percentages to the UI
+        displayPercentages : function(percentages){
+            //we need to get all the item__percentage elements from the html
+            var fields = document.querySelectorAll(DOMStrings.expensesPercentageLabel);
+
+            var nodeListForEach = function(list, callback){
+                for (var i = 0; i < list.length ; i++){
+                    callback(list[i], i);
+                }
+            };
+
+            //apparently we don't have for each on nodeList
+            nodeListForEach(fields, function(current, index){
+                if(percentages[index] > 0){
+                    current.textContent = percentages[index] + '%';
+                }else{
+                    current.textContent = '---';
+                }
+            });
         }
     };
 })();
@@ -284,7 +306,8 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         var percentages = budgetCtrl.getPercentages();
 
         // 3. Update the UI with the new percentages
-        console.log("percentages ", percentages);
+        // console.log("percentages ", percentages); //debug
+        UICtrl.displayPercentages(percentages);
 
     };
 
