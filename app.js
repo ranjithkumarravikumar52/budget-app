@@ -5,6 +5,20 @@ var budgetController = (function () {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1; //-1 for default
+    };
+
+    //adding percentage field to Expense prototype, so that any object that inherits Expense will have it in their prototype
+    Expense.prototype.calcPercentages = function(totalIncome){
+        if(totalIncome > 0){
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        }else{
+            this.percentage = -1;
+        }
+    };
+
+    Expense.prototype.getPercentage = function(){
+        return this.percentage;
     };
 
     //function constructor, notice the UpperCase I
@@ -83,6 +97,25 @@ var budgetController = (function () {
             //expense = 100, income  = 200, percentageSpent = 100/200 = 50%
 
         },
+        calculatePercentages  : function(){
+            /**
+             * Sample case:
+             *  Total income = 100
+             *  3 expenses - a = 20, b = 10, c = 40
+             *  percentages : 20/100*100, 10/100*100, 40/100*100 = 20%, 10%, 40%
+             */
+            data.allItems.exp.forEach(function(currentElement){
+               currentElement.calcPercentages(data.totals.inc);
+            });
+        },
+
+        getPercentages : function(){
+            var allPercentages =  data.allItems.exp.map(function(currentElement){
+                return currentElement.getPercentage();
+            });
+            return allPercentages;
+        },
+
         getBudget : function(){
             return {
                 budget : data.budget,
@@ -134,7 +167,8 @@ var UIController = (function(){
         incomesLabel : ".budget__income--value",
         expensesLabel : ".budget__expenses--value",
         percentageLabel : ".budget__expenses--percentage",
-        container : ".container"
+        container : ".container",
+        expensesPercentageLabel : ".item__percentage"
     };
 
     //write a public method that reads different types of html input
@@ -214,6 +248,27 @@ var UIController = (function(){
             //apparently we can't delete an element directly in DOM, we can only delete the child element
             var elementById = document.getElementById(selectorID);
             elementById.parentNode.removeChild(elementById);
+        },
+
+        //display percentages to the UI
+        displayPercentages : function(percentages){
+            //we need to get all the item__percentage elements from the html
+            var fields = document.querySelectorAll(DOMStrings.expensesPercentageLabel);
+
+            var nodeListForEach = function(list, callback){
+                for (var i = 0; i < list.length ; i++){
+                    callback(list[i], i);
+                }
+            };
+
+            //apparently we don't have for each on nodeList
+            nodeListForEach(fields, function(current, index){
+                if(percentages[index] > 0){
+                    current.textContent = percentages[index] + '%';
+                }else{
+                    current.textContent = '---';
+                }
+            });
         }
     };
 })();
@@ -240,6 +295,22 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
 
+    // when will our income-percentages be actually updated?
+    // each time we add or delete an item
+    // percentage of income for each expense
+    var updatePercentages = function(){
+        // 1. Calculate the percentages
+        budgetCtrl.calculatePercentages();
+
+        // 2. Read them from budget controller
+        var percentages = budgetCtrl.getPercentages();
+
+        // 3. Update the UI with the new percentages
+        // console.log("percentages ", percentages); //debug
+        UICtrl.displayPercentages(percentages);
+
+    };
+
     //methods for updating and deletion of the budget
     var updateBudget = function () {
         //1. Calculate the budget
@@ -250,6 +321,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
         //3. Display the budget on UI
         UICtrl.displayBudget(budget);
+
+        // 4. Calculate and update percentages
+        updatePercentages();
     };
 
     //custom function for event listeners
@@ -274,6 +348,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
             //5. Calculate and updateBudget
             updateBudget();
+
+            // 6. Calculate and update percentages
+            updatePercentages();
         }
     };
 
