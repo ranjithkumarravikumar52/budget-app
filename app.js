@@ -109,7 +109,8 @@ var UIController = (function(){
         budgetLabel : ".budget__value",
         incomesLabel : ".budget__income--value",
         expensesLabel : ".budget__expenses--value",
-        percentageLabel : ".budget__expenses--percentage"
+        percentageLabel : ".budget__expenses--percentage",
+        container : ".container"
     };
 
     //write a public method that reads different types of html input
@@ -132,11 +133,11 @@ var UIController = (function(){
             //Create HTML string with placeholder text
             if(type === 'inc'){
                 element = DOMStrings.incomeContainer;
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 
             }else if(type === 'exp'){
                 element = DOMStrings.expenseContainer;
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
 
             //replace placeholder text with some actual data
@@ -203,6 +204,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
                 ctrlAddItem();
             }
         });
+
+        //here we choose container because it's the parent of both income and expenses list
+        document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
 
     //methods for updating and deletion of the budget
@@ -240,6 +244,36 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
             //5. Calculate and updateBudget
             updateBudget();
         }
+    };
+
+    //function to delete an item
+    var ctrlDeleteItem = function(event) {
+        var splitID, type, ID;
+        //this will give us the target element
+        //the whole point of this is to get the id of the item that we eventually want to delete
+        var itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        // console.log(itemID); //we want to traverse (4 times) the DOM till we reach the div containing ID, when we hit the delete icon
+        if(itemID){
+            splitID = itemID.split('-');
+            type = splitID[0];
+            ID = splitID[1];
+            // 1. Delete the item from our DS
+            // 2. Delete the item from our UI
+            // 3. Update and show the new budget
+        }
+        /*
+        <div class="item clearfix" id="income-0">
+            <div class="item__description">Salary</div>
+            <div class="right clearfix">
+                <div class="item__value">+ 2,100.00</div>
+                <div class="item__delete">
+                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                    when we click on the i icon above we want to trigger event bubble to the point of reaching div containing income id
+                    and delete that whole div, thus clearing the item
+                </div>
+            </div>
+        </div>
+         */
     };
 
     //exposing our methods
