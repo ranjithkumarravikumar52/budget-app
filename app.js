@@ -250,7 +250,7 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
     var ctrlDeleteItem = function(event) {
         //this will give us the target element
         //the whole point of this is to get the id of the item that we eventually want to delete
-        console.log(event.target);
+        console.log(event.target.parentNode.parentNode.parentNode.parentNode); //we want to traverse (4 times) the DOM till we reach the div containing ID, when we hit the delete icon
         /*
         <div class="item clearfix" id="income-0">
             <div class="item__description">Salary</div>
