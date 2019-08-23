@@ -257,6 +257,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
             splitID = itemID.split('-');
             type = splitID[0];
             ID = splitID[1];
+            // 1. Delete the item from our DS
+            // 2. Delete the item from our UI
+            // 3. Update and show the new budget
         }
         /*
         <div class="item clearfix" id="income-0">
