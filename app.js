@@ -109,7 +109,8 @@ var UIController = (function(){
         budgetLabel : ".budget__value",
         incomesLabel : ".budget__income--value",
         expensesLabel : ".budget__expenses--value",
-        percentageLabel : ".budget__expenses--percentage"
+        percentageLabel : ".budget__expenses--percentage",
+        container : ".container"
     };
 
     //write a public method that reads different types of html input
@@ -203,6 +204,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
                 ctrlAddItem();
             }
         });
+
+        //here we choose container because it's the parent of both income and expenses list
+        document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
 
     //methods for updating and deletion of the budget
@@ -240,6 +244,26 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
             //5. Calculate and updateBudget
             updateBudget();
         }
+    };
+
+    //function to delete an item
+    var ctrlDeleteItem = function(event) {
+        //this will give us the target element
+        //the whole point of this is to get the id of the item that we eventually want to delete
+        console.log(event.target);
+        /*
+        <div class="item clearfix" id="income-0">
+            <div class="item__description">Salary</div>
+            <div class="right clearfix">
+                <div class="item__value">+ 2,100.00</div>
+                <div class="item__delete">
+                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                    when we click on the i icon above we want to trigger event bubble to the point of reaching div containing income id
+                    and delete that whole div, thus clearing the item
+                </div>
+            </div>
+        </div>
+         */
     };
 
     //exposing our methods
