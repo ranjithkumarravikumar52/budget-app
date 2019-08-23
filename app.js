@@ -207,6 +207,13 @@ var UIController = (function(){
             }else{
                 document.querySelector(DOMStrings.percentageLabel).textContent = '---';
             }
+        },
+
+        //better to have the entire selectorID like "inc-0" than sending two different vars type, id
+        deleteListItem : function(selectorID){
+            //apparently we can't delete an element directly in DOM, we can only delete the child element
+            var elementById = document.getElementById(selectorID);
+            elementById.parentNode.removeChild(elementById);
         }
     };
 })();
@@ -285,7 +292,10 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
             budgetCtrl.deleteItem(type, ID);
 
             // 2. Delete the item from our UI
+            UICtrl.deleteListItem(itemID);
+
             // 3. Update and show the new budget
+            updateBudget();
         }
         /*
         <div class="item clearfix" id="income-0">
