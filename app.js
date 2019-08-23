@@ -133,11 +133,11 @@ var UIController = (function(){
             //Create HTML string with placeholder text
             if(type === 'inc'){
                 element = DOMStrings.incomeContainer;
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 
             }else if(type === 'exp'){
                 element = DOMStrings.expenseContainer;
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
 
             //replace placeholder text with some actual data
@@ -248,9 +248,16 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
     //function to delete an item
     var ctrlDeleteItem = function(event) {
+        var splitID, type, ID;
         //this will give us the target element
         //the whole point of this is to get the id of the item that we eventually want to delete
-        console.log(event.target.parentNode.parentNode.parentNode.parentNode); //we want to traverse (4 times) the DOM till we reach the div containing ID, when we hit the delete icon
+        var itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        // console.log(itemID); //we want to traverse (4 times) the DOM till we reach the div containing ID, when we hit the delete icon
+        if(itemID){
+            splitID = itemID.split('-');
+            type = splitID[0];
+            ID = splitID[1];
+        }
         /*
         <div class="item clearfix" id="income-0">
             <div class="item__description">Salary</div>
