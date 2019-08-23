@@ -240,6 +240,18 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
 
+    // when will our income-percentages be actually updated?
+    // each time we add or delete an item
+    // percentage of income for each expense
+    var updatePercentages = function(){
+        // 1. Calculate the percentages
+
+        // 2. Read them from budget controller
+
+        // 3. Update the UI with the new percentages
+
+    };
+
     //methods for updating and deletion of the budget
     var updateBudget = function () {
         //1. Calculate the budget
@@ -250,6 +262,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
         //3. Display the budget on UI
         UICtrl.displayBudget(budget);
+
+        // 4. Calculate and update percentages
+        updatePercentages();
     };
 
     //custom function for event listeners
@@ -274,6 +289,9 @@ var appController = (function(budgetCtrl, UICtrl){ //params are named differentl
 
             //5. Calculate and updateBudget
             updateBudget();
+
+            // 6. Calculate and update percentages
+            updatePercentages();
         }
     };
 
